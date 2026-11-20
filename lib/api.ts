@@ -40,3 +40,11 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   }
   return body as T;
 }
+
+// For public endpoints: no token needed
+export async function publicFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const res = await fetch(`${API}${path}`, init);
+  const body = await res.json().catch(() => null);
+  if (!res.ok) throw new ApiError(res.status, body?.message || "Request failed");
+  return body as T;
+}
