@@ -10,9 +10,12 @@ const client = g._mongo ?? new MongoClient(process.env.MONGODB_URI!);
 if (process.env.NODE_ENV !== "production") g._mongo = client;
 const db = client.db(process.env.DB_NAME || "pizzahub");
 
+const googleEnabled = !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
+
 const PUBLIC_ROLES = ["vendor", "customer"];
 
 export const auth = betterAuth({
+  
   database: mongodbAdapter(db, { client }),
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
@@ -24,12 +27,14 @@ export const auth = betterAuth({
     autoSignIn: true,
   },
 
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-  },
+  socialProviders: googleEnabled
+    ? {
+      google: {
+        clientId: process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      },
+    }
+    : {},
 
   user: {
     modelName: "users",
