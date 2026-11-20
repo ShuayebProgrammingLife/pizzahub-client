@@ -5,6 +5,9 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 
+import { apiFetch, clearApiToken } from "@/lib/api";
+import { toast } from "sonner";
+
 export default function TempDashboard() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
@@ -28,12 +31,30 @@ export default function TempDashboard() {
       </pre>
       <Button
         onClick={async () => {
+          clearApiToken();
           await authClient.signOut();
           router.replace("/sign-in");
         }}
       >
         Logout
       </Button>
+
+      <Button
+        variant="secondary"
+        onClick={async () => {
+          try {
+            const data = await apiFetch("/api/me");
+            toast.success("API OK");
+            console.log(data);
+          } catch (e) {
+            toast.error(e instanceof Error ? e.message : "API failed");
+          }
+        }}
+      >
+        Call API /api/me
+      </Button>
+
+
     </main>
   );
 }
