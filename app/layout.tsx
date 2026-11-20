@@ -24,7 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${heading.variable} ${body.variable}`}>
+    <html
+      lang="en"
+      className={`dark ${heading.variable} ${body.variable}`}
+      suppressHydrationWarning
+    >
       <body className="bg-background text-foreground font-sans antialiased">
         {children}
         <Toaster theme="dark" richColors position="top-right" />
