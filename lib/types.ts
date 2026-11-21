@@ -22,3 +22,40 @@ export type ItemsMeta = {
   categories: { name: string; count: number; cover: string | null }[];
   locations: string[];
 };
+
+export type VendorItem = {
+  _id: string;
+  itemName: string;
+  category: string;
+  description: string;
+  price: number;
+  location: string;
+  images: string[];
+  status: "pending" | "approved" | "rejected" | "inactive";
+  isAvailable?: boolean;
+  createdAt: string;
+};
+
+export type VendorOrder = {
+  _id: string;
+  status: "pending" | "accepted" | "rejected" | "cancelled";
+  deliveryDate: string;
+  deliveryAddress: string;
+  message: string;
+  createdAt: string;
+  priceAtOrder: number;
+  customer: { name?: string; email?: string; image?: string | null };
+  item: { _id?: string; itemName?: string; image?: string | null; price?: number };
+};
+
+export type VendorOverview = {
+  totalItems: number;
+  activeItems: number;
+  pendingItems: number;
+  pendingOrders: number;
+  acceptedOrders: number;
+  acceptedRevenue: number;
+  plan: "free" | "premium";
+  planExpiresAt: string | null;
+  limit: number | null;
+};
