@@ -14,6 +14,7 @@ import {
   Menu,
   PlusCircle,
   Settings,
+  ShoppingBag,
   UtensilsCrossed,
   type LucideIcon,
 } from "lucide-react";
@@ -29,7 +30,7 @@ type NavItem = {
   icon: LucideIcon;
   exact?: boolean;
 };
-type Role = "vendor"; // "customer" and "admin" are added in their own steps
+type Role = "vendor" | "customer"; // "admin" is added in its own step
 
 const NAV: Record<Role, NavItem[]> = {
   vendor: [
@@ -57,6 +58,24 @@ const NAV: Record<Role, NavItem[]> = {
     },
     {
       href: "/dashboard/vendor/profile",
+      label: "Profile Settings",
+      icon: Settings,
+    },
+  ],
+  customer: [
+    {
+      href: "/dashboard/customer",
+      label: "Overview",
+      icon: LayoutDashboard,
+      exact: true,
+    },
+    {
+      href: "/dashboard/customer/orders",
+      label: "My Orders",
+      icon: ShoppingBag,
+    },
+    {
+      href: "/dashboard/customer/profile",
       label: "Profile Settings",
       icon: Settings,
     },
