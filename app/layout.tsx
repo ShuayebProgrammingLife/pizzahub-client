@@ -1,5 +1,5 @@
 import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
-import { Toaster } from "sonner";
+import { ThemedToaster } from "@/components/site/themed-toaster";
 import "./globals.css";
 
 const heading = Bricolage_Grotesque({
@@ -14,9 +14,14 @@ const body = Space_Grotesk({
 });
 
 export const metadata = {
-  title: "PizzaHub — Pizza Ordering & Delivery",
+  title: {
+    default: "PizzaHub — Pizza Ordering & Delivery",
+    template: "%s | PizzaHub",
+  },
   description: "Hot & fresh artisan pizza delivered to your door.",
 };
+
+const themeScript = `try{if(localStorage.getItem('ph-theme')==='light'){document.documentElement.classList.remove('dark')}}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -26,12 +31,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${heading.variable} ${body.variable}`}
       suppressHydrationWarning
+      className={`dark ${heading.variable} ${body.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="bg-background text-foreground font-sans antialiased">
         {children}
-        <Toaster theme="dark" richColors position="top-right" />
+        <ThemedToaster />
       </body>
     </html>
   );
