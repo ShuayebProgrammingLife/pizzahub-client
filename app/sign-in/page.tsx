@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -16,6 +16,15 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Google sign-in sends users back here with ?error=... when it fails or the account is blocked
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("error")) {
+      toast.error(
+        "Sign-in failed. The request was cancelled or your account may be blocked.",
+      );
+    }
+  }, []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -107,6 +116,11 @@ export default function SignInPage() {
           <span className="h-px flex-1 bg-border" />
         </div>
         <GoogleButton />
+
+        <p className="text-center text-xs text-muted-foreground">
+          New Google accounts start as Customer. To sell pizza, sign up as a
+          Vendor first.
+        </p>
       </form>
     </AuthShell>
   );

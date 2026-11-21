@@ -282,7 +282,7 @@ export default function SignUpPage() {
           <span className="h-px flex-1 bg-border" /> or continue with{" "}
           <span className="h-px flex-1 bg-border" />
         </div>
-        <GoogleButton />
+        <GoogleButton role={role} />
       </form>
     </AuthShell>
   );

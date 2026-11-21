@@ -39,33 +39,84 @@ export default function VendorOverviewPage() {
         title={name ? `Welcome, ${name}` : "Welcome"}
         subtitle="Monitor your menu, customer orders and subscription at a glance."
         action={
-          <Link href="/dashboard/vendor/add" className={cn(buttonVariants({ size: "lg" }), "gap-2 font-bold glow-amber")}>
+          <Link
+            href="/dashboard/vendor/add"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "gap-2 font-bold glow-amber",
+            )}
+          >
             <PlusCircle className="h-4 w-4" /> Create New Pizza Item
           </Link>
         }
       />
 
-      {error && <p className="rounded-lg border border-border bg-card p-4 text-sm text-secondary">{error}</p>}
+      {error && (
+        <p className="rounded-lg border border-border bg-card p-4 text-sm text-secondary">
+          {error}
+        </p>
+      )}
+
+      {session?.user && !session.user.businessName && (
+        <Link
+          href="/dashboard/vendor/profile"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary/40 bg-primary/10 p-4 text-sm font-semibold text-ember transition hover:bg-primary/15"
+        >
+          Add your restaurant name so customers see it on your pizzas
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      )}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard loading={!ov} icon={Layers} label="Total menu items" value={ov?.totalItems ?? 0}
-          hint={ov ? `${ov.pendingItems} awaiting approval` : undefined} />
-        <StatCard loading={!ov} icon={Crown} label="Active / quota" value={ov?.activeItems ?? 0}
+        <StatCard
+          loading={!ov}
+          icon={Layers}
+          label="Total menu items"
+          value={ov?.totalItems ?? 0}
+          hint={ov ? `${ov.pendingItems} awaiting approval` : undefined}
+        />
+        <StatCard
+          loading={!ov}
+          icon={Crown}
+          label="Active / quota"
+          value={ov?.activeItems ?? 0}
           suffix={ov ? `/ ${ov.limit ?? "∞"}` : undefined}
-          hint={ov ? (ov.plan === "premium" ? "Premium plan: unlimited" : "Free plan limit") : undefined} />
-        <StatCard loading={!ov} icon={Timer} label="Pending orders" value={ov?.pendingOrders ?? 0}
-          badge={ov && ov.pendingOrders > 0 ? "Action required" : undefined} />
-        <StatCard loading={!ov} icon={Wallet} label="Accepted orders" value={ov?.acceptedOrders ?? 0}
-          hint={ov ? `${money(ov.acceptedRevenue)} accepted value` : undefined} />
+          hint={
+            ov
+              ? ov.plan === "premium"
+                ? "Premium plan: unlimited"
+                : "Free plan limit"
+              : undefined
+          }
+        />
+        <StatCard
+          loading={!ov}
+          icon={Timer}
+          label="Pending orders"
+          value={ov?.pendingOrders ?? 0}
+          badge={ov && ov.pendingOrders > 0 ? "Action required" : undefined}
+        />
+        <StatCard
+          loading={!ov}
+          icon={Wallet}
+          label="Accepted orders"
+          value={ov?.acceptedOrders ?? 0}
+          hint={ov ? `${money(ov.acceptedRevenue)} accepted value` : undefined}
+        />
       </section>
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-2xl font-bold">Pending Customer Orders</h2>
-            <p className="text-sm text-on-surface-variant">Accept or reject each order once.</p>
+            <p className="text-sm text-on-surface-variant">
+              Accept or reject each order once.
+            </p>
           </div>
-          <Link href="/dashboard/vendor/orders" className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}>
+          <Link
+            href="/dashboard/vendor/orders"
+            className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+          >
             All orders <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -77,18 +128,27 @@ export default function VendorOverviewPage() {
           </div>
         ) : orders === null ? (
           <div className="grid gap-4 lg:grid-cols-2">
-            {[0, 1].map((i) => <Skeleton key={i} className="h-72 rounded-lg" />)}
+            {[0, 1].map((i) => (
+              <Skeleton key={i} className="h-72 rounded-lg" />
+            ))}
           </div>
         ) : orders.length === 0 ? (
           <div className="flex flex-col items-center gap-2 rounded-lg border border-border bg-card p-10 text-center">
             <Inbox className="h-9 w-9 text-primary" />
             <p className="font-bold">No pending orders</p>
-            <p className="text-sm text-on-surface-variant">New customer orders will show up here.</p>
+            <p className="text-sm text-on-surface-variant">
+              New customer orders will show up here.
+            </p>
           </div>
         ) : (
           <div className="grid gap-4 lg:grid-cols-2">
             {orders.slice(0, 4).map((o) => (
-              <OrderCard key={o._id} order={o} busy={busyId === o._id} onAct={act} />
+              <OrderCard
+                key={o._id}
+                order={o}
+                busy={busyId === o._id}
+                onAct={act}
+              />
             ))}
           </div>
         )}
@@ -102,7 +162,9 @@ export default function VendorOverviewPage() {
           <div>
             <p className="font-bold">
               Current plan:{" "}
-              <span className="text-ember">{ov ? (ov.plan === "premium" ? "Premium" : "Free") : "..."}</span>
+              <span className="text-ember">
+                {ov ? (ov.plan === "premium" ? "Premium" : "Free") : "..."}
+              </span>
             </p>
             <p className="text-sm text-on-surface-variant">
               {ov?.plan === "premium" && ov.planExpiresAt
@@ -111,7 +173,10 @@ export default function VendorOverviewPage() {
             </p>
           </div>
         </div>
-        <Link href="/dashboard/vendor/subscription" className={cn(buttonVariants({ variant: "secondary" }))}>
+        <Link
+          href="/dashboard/vendor/subscription"
+          className={cn(buttonVariants({ variant: "secondary" }))}
+        >
           Manage subscription
         </Link>
       </section>

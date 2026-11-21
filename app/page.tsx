@@ -253,14 +253,14 @@ export default function HomePage() {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                     <div className="relative flex h-full flex-col justify-between p-3">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-black/50 text-ember backdrop-blur">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-black/50 text-[#ffc788] backdrop-blur">
                         <Icon className="h-4 w-4" />
                       </span>
                       <div>
-                        <p className="text-sm font-bold leading-tight">
+                        <p className="text-sm font-bold leading-tight text-white">
                           {c.name}
                         </p>
-                        <p className="text-xs text-on-surface-variant">
+                        <p className="text-xs text-white/70">
                           {c.count} {c.count === 1 ? "item" : "items"}
                         </p>
                       </div>
