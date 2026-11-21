@@ -385,6 +385,41 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      {/* VIP CLUB / NEWSLETTER PROMO STRIP */}
+      <section className="py-12">
+        <Container>
+          <Reveal>
+            <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-white/5 bg-surface-high p-8 md:flex-row">
+              <div className="space-y-1 text-center md:text-left">
+                <div className="flex items-center justify-center gap-2 text-primary md:justify-start">
+                  <Flame className="h-5 w-5" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-ember">
+                    PizzaHub VIP Club
+                  </span>
+                </div>
+                <h3 className="font-heading text-2xl font-bold">
+                  Get $10 Off Your First Artisan Oven Order
+                </h3>
+                <p className="text-sm text-on-surface-variant">
+                  Receive secret weekend drop alerts and seasonal specials
+                  straight to your inbox.
+                </p>
+              </div>
+              <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="rounded-lg border border-white/10 bg-surface-lowest px-4 py-2.5 text-sm outline-none placeholder:text-outline focus:border-primary"
+                />
+                <Button className="font-bold glow-amber">
+                  Unlock $10 Off
+                </Button>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
     </MotionConfig>
   );
 }

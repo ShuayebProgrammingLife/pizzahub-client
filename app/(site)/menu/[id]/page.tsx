@@ -174,6 +174,18 @@ export default function ItemDetailsPage() {
             {item.description}
           </p>
 
+          {/* Kitchen Prep & Dough Metrics */}
+          <div className="grid grid-cols-2 gap-3 text-on-surface">
+            <div className="rounded-lg border border-white/5 bg-surface-high p-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Oven Bake Time</span>
+              <p className="font-heading text-base font-bold text-ember">18–22 mins @ 900°F</p>
+            </div>
+            <div className="rounded-lg border border-white/5 bg-surface-high p-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Fermentation</span>
+              <p className="font-heading text-base font-bold text-basil">48h Slow Poolish</p>
+            </div>
+          </div>
+
           <div className="flex items-center gap-3 rounded-lg border border-white/5 bg-card p-4">
             <Avatar className="h-11 w-11">
               {item.vendor.image && (
