@@ -82,3 +82,56 @@ export type CustomerSummary = {
   rejected: number;
   cancelled: number;
 };
+
+export type AdminOverview = {
+  totalUsers: number;
+  vendors: number;
+  customers: number;
+  admins: number;
+  blockedUsers: number;
+  totalItems: number;
+  pendingItems: number;
+  totalTransactions: number;
+  revenue: number;
+  itemsByStatus: { pending: number; approved: number; rejected: number; inactive: number };
+};
+
+export type AdminUser = {
+  _id: string;
+  name: string;
+  email: string;
+  image?: string | null;
+  role: "vendor" | "customer" | "admin";
+  businessName?: string;
+  isBlocked?: boolean;
+  subscriptionPlan?: "free" | "premium";
+  subscriptionExpiresAt?: string | null;
+  createdAt: string;
+};
+
+export type AdminUserDetails = { user: AdminUser; stats: Record<string, number> };
+
+export type AdminItem = {
+  _id: string;
+  itemName: string;
+  category: string;
+  description: string;
+  price: number;
+  location: string;
+  images: string[];
+  status: "pending" | "approved" | "rejected" | "inactive";
+  isAvailable?: boolean;
+  createdAt: string;
+  vendor: { id?: string; name?: string; email?: string; isBlocked?: boolean };
+};
+
+export type AdminTransaction = {
+  _id: string;
+  plan: string;
+  amount: number;
+  currency: string;
+  status: string;
+  stripeSessionId?: string;
+  createdAt: string;
+  vendor: { name?: string; email?: string };
+};

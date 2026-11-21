@@ -2,7 +2,8 @@ import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { createAuthMiddleware, APIError } from "better-auth/api";
 import { jwt } from "better-auth/plugins";
-import { MongoClient } from "mongodb";
+
+import { MongoClient, ObjectId } from "mongodb";
 
 // Reuse one Mongo connection during dev hot-reloads
 const g = globalThis as unknown as { _mongo?: MongoClient };
@@ -82,6 +83,22 @@ export const auth = betterAuth({
         },
       },
     },
+
+    session: {
+      create: {
+        before: async (session) => {
+          const id = String(session.userId);
+          const filter = ObjectId.isValid(id) ? { $or: [{ _id: new ObjectId(id) }, { id }] } : { id };
+          const u = await db.collection("users").findOne(filter);
+          if (u?.isBlocked) {
+            throw new APIError("FORBIDDEN", { message: "Your account has been blocked. Please contact support." });
+          }
+          return { data: session };
+        },
+      },
+    },
+
+    
   },
 
   // Issues JWTs that the Express server will verify (Step 3)

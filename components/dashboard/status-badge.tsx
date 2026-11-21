@@ -4,12 +4,21 @@ const STYLES: Record<string, string> = {
   pending: "bg-primary/15 text-primary",
   approved: "bg-basil/15 text-basil",
   accepted: "bg-basil/15 text-basil",
+  paid: "bg-basil/15 text-basil",
   rejected: "bg-tomato/20 text-secondary",
+  failed: "bg-tomato/20 text-secondary",
   cancelled: "bg-surface-highest text-on-surface-variant",
   inactive: "bg-surface-highest text-on-surface-variant",
+  expired: "bg-surface-highest text-on-surface-variant",
 };
 
-export function StatusBadge({ status }: { status: string }) {
+export function StatusBadge({
+  status,
+  label,
+}: {
+  status: string;
+  label?: string;
+}) {
   return (
     <span
       className={cn(
@@ -18,7 +27,7 @@ export function StatusBadge({ status }: { status: string }) {
       )}
     >
       <span className="h-1.5 w-1.5 rounded-full bg-current" />
-      {status}
+      {label ?? status}
     </span>
   );
 }

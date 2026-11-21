@@ -16,3 +16,11 @@ export const fmtDateTime = (d: string) =>
     hour: "numeric",
     minute: "2-digit",
   });
+
+export function fmtMoney(amount: number, currency = "usd") {
+  try {
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: currency.toUpperCase() }).format(amount);
+  } catch {
+    return `${amount.toFixed(2)} ${currency.toUpperCase()}`;
+  }
+}
