@@ -6,3 +6,13 @@ export const fmtDate = (d: string) =>
   new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 
 export const money = (n: number) => `$${n.toFixed(2)}`;
+
+
+export const fmtDateTime = (d: string) =>
+  new Date(d).toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
