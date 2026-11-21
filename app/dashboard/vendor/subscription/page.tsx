@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Check, Crown } from "lucide-react";
+import { Check, Crown, ExternalLink, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -25,6 +25,7 @@ const PREMIUM = [
 export default function SubscriptionPage() {
   const [ov, setOv] = useState<VendorOverview | null>(null);
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState<"checkout" | "portal" | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -40,7 +41,27 @@ export default function SubscriptionPage() {
     };
   }, []);
 
+  // coming back with the browser Back button must not leave the button stuck
+  useEffect(() => {
+    const onShow = (e: PageTransitionEvent) => e.persisted && setBusy(null);
+    window.addEventListener("pageshow", onShow);
+    return () => window.removeEventListener("pageshow", onShow);
+  }, []);
+
+  async function go(path: string, kind: "checkout" | "portal") {
+    setBusy(kind);
+    try {
+      const r = await apiFetch<{ url: string }>(path, { method: "POST" });
+      window.location.href = r.url; // leave for Stripe, so the button stays disabled
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Something went wrong");
+      setBusy(null);
+    }
+  }
+
   const premium = ov?.plan === "premium";
+  const overLimit =
+    !!ov && !premium && ov.limit !== null && ov.activeItems > ov.limit;
 
   const plan = (
     title: string,
@@ -102,9 +123,20 @@ export default function SubscriptionPage() {
         <>
           <p className="text-sm text-on-surface-variant">
             {premium && ov.planExpiresAt
-              ? `Your Premium plan is active until ${fmtDate(ov.planExpiresAt)}.`
+              ? ov.cancelAtPeriodEnd
+                ? `Your Premium plan will end on ${fmtDate(ov.planExpiresAt)} and will not renew.`
+                : `Your Premium plan is active and renews around ${fmtDate(ov.planExpiresAt)}.`
               : `You are on the Free plan, using ${ov.activeItems} of ${ov.limit ?? "unlimited"} active items.`}
           </p>
+
+          {overLimit && (
+            <p className="rounded-lg border border-primary/30 bg-primary/10 p-3 text-sm text-ember">
+              You have more active items than the Free plan allows. They stay
+              live, but you cannot add new ones until you are under the limit or
+              upgrade to Premium.
+            </p>
+          )}
+
           <div className="grid gap-5 md:grid-cols-2">
             {plan("Free", FREE, !premium)}
             {plan(
@@ -113,17 +145,41 @@ export default function SubscriptionPage() {
               premium,
               true,
               premium ? (
-                <Button disabled className="h-11 w-full">
-                  You are Premium
-                </Button>
+                ov.canManageBilling ? (
+                  <Button
+                    variant="secondary"
+                    disabled={busy !== null}
+                    onClick={() => go("/api/payments/portal", "portal")}
+                    className="h-11 w-full gap-2 font-bold"
+                  >
+                    {busy === "portal" ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ExternalLink className="h-4 w-4" />
+                    )}
+                    Manage billing or cancel
+                  </Button>
+                ) : (
+                  <Button disabled className="h-11 w-full">
+                    You are Premium
+                  </Button>
+                )
               ) : (
                 <Button
-                  className="h-11 w-full font-bold glow-amber"
+                  disabled={busy !== null}
                   onClick={() =>
-                    toast.info("Stripe checkout is connected in the next step")
+                    go("/api/payments/checkout-session", "checkout")
                   }
+                  className="h-11 w-full gap-2 font-bold glow-amber"
                 >
-                  Upgrade to Premium
+                  {busy === "checkout" ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" /> Redirecting
+                      to Stripe...
+                    </>
+                  ) : (
+                    "Upgrade to Premium"
+                  )}
                 </Button>
               ),
             )}

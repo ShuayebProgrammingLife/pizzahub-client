@@ -57,6 +57,10 @@ export type VendorOverview = {
   acceptedRevenue: number;
   plan: "free" | "premium";
   planExpiresAt: string | null;
+
+  cancelAtPeriodEnd: boolean;
+  canManageBilling: boolean;
+  
   limit: number | null;
 };
 
