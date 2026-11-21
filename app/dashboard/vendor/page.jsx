@@ -13,6 +13,8 @@ import { useVendorOrders } from "@/lib/use-vendor-orders";
 import { fmtDate, money } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
+import { VendorCharts } from "@/components/dashboard/vendor-charts";
+
 export default function VendorOverviewPage() {
   const { data: session } = authClient.useSession();
   const [ov, setOv] = useState(null);
@@ -89,6 +91,7 @@ export default function VendorOverviewPage() {
               : undefined
           }
         />
+
         <StatCard
           loading={!ov}
           icon={Timer}
@@ -104,6 +107,8 @@ export default function VendorOverviewPage() {
           hint={ov ? `${money(ov.acceptedRevenue)} accepted value` : undefined}
         />
       </section>
+
+      <VendorCharts />
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">

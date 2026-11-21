@@ -110,6 +110,8 @@ export default function HomePage() {
     <MotionConfig reducedMotion="user">
       {/* HERO */}
       <section className="relative overflow-hidden bg-surface-lowest">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[url('/images/hero.jpg')] bg-cover bg-center opacity-25" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-r from-surface-lowest via-surface-lowest/80 to-transparent" />
         <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-1/3 h-[28rem] w-[28rem] rounded-full bg-tomato-container/15 blur-3xl" />
         <Container className="relative grid items-center gap-12 py-14 lg:grid-cols-12 lg:py-24">
