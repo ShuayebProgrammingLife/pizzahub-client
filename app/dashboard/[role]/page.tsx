@@ -5,6 +5,8 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 
+import Link from "next/link";
+
 import { apiFetch, clearApiToken } from "@/lib/api";
 import { toast } from "sonner";
 
@@ -53,8 +55,11 @@ export default function TempDashboard() {
       >
         Call API /api/me
       </Button>
-
-
+      {session.user.role === "vendor" && (
+        <Link href="/dashboard/vendor/add">
+          <Button variant="secondary">+ Add Menu Item</Button>
+        </Link>
+      )}
     </main>
   );
 }
