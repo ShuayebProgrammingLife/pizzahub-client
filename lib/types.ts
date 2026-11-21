@@ -59,3 +59,26 @@ export type VendorOverview = {
   planExpiresAt: string | null;
   limit: number | null;
 };
+
+
+export type CustomerOrder = {
+  _id: string;
+  status: "pending" | "accepted" | "rejected" | "cancelled";
+  deliveryDate: string;
+  deliveryAddress: string;
+  message: string;
+  createdAt: string;
+  respondedAt?: string;
+  cancelledAt?: string;
+  priceAtOrder: number;
+  item: { _id?: string; itemName?: string; image?: string | null; location?: string };
+  vendor: { name?: string; image?: string | null };
+};
+
+export type CustomerSummary = {
+  total: number;
+  pending: number;
+  accepted: number;
+  rejected: number;
+  cancelled: number;
+};
