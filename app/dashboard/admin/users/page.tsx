@@ -116,7 +116,7 @@ function UserDetailsDialog({
         </DialogHeader>
 
         {err ? (
-          <p className="text-sm text-secondary">{err}</p>
+          <p className="text-sm text-danger">{err}</p>
         ) : !u ? (
           <div className="space-y-3">
             <Skeleton className="h-16 w-full" />
@@ -439,7 +439,7 @@ export default function ManageUsersPage() {
                             size="sm"
                             variant="secondary"
                             onClick={() => setTarget(u)}
-                            className="gap-1.5 text-secondary"
+                            className="gap-1.5 text-danger"
                           >
                             <ShieldBan className="h-4 w-4" /> Block
                           </Button>
@@ -478,7 +478,7 @@ export default function ManageUsersPage() {
               onClick={confirmToggle}
               className={
                 target?.isBlocked
-                  ? "bg-basil font-bold text-[#08390a] hover:bg-basil/90"
+                  ? "bg-basil font-bold text-basil-foreground hover:bg-basil/90"
                   : "bg-tomato-container font-bold text-white hover:bg-tomato"
               }
             >

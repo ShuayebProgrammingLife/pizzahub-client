@@ -106,12 +106,12 @@ function SuccessInner() {
         : "Your Premium plan is now active.",
     },
     failed: {
-      icon: <XCircle className="h-12 w-12 text-secondary" />,
+      icon: <XCircle className="h-12 w-12 text-danger" />,
       title: "Payment failed",
       text: "Your payment did not go through and you were not charged. Please try again.",
     },
     expired: {
-      icon: <XCircle className="h-12 w-12 text-secondary" />,
+      icon: <XCircle className="h-12 w-12 text-danger" />,
       title: "Checkout expired",
       text: "This checkout session expired. Start a new upgrade to continue.",
     },

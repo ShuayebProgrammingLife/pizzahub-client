@@ -139,7 +139,7 @@ export function Navbar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={logout}
-                  className="cursor-pointer gap-2 text-secondary"
+                  className="cursor-pointer gap-2 text-danger"
                 >
                   <LogOut className="h-4 w-4" /> Logout
                 </DropdownMenuItem>
@@ -221,7 +221,7 @@ export function Navbar() {
                 </Link>
                 <button
                   onClick={logout}
-                  className="rounded-md px-3 py-2.5 text-left text-sm font-semibold text-secondary"
+                  className="rounded-md px-3 py-2.5 text-left text-sm font-semibold text-danger"
                 >
                   Logout
                 </button>

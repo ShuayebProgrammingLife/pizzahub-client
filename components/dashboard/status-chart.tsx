@@ -13,6 +13,7 @@ import {
 export type ChartDatum = { name: string; value: number; color: string };
 
 export function StatusChart({ data }: { data: ChartDatum[] }) {
+  const tick = { fill: "var(--muted-foreground)", fontSize: 12 };
   return (
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
@@ -20,28 +21,24 @@ export function StatusChart({ data }: { data: ChartDatum[] }) {
           data={data}
           margin={{ top: 8, right: 8, left: -20, bottom: 0 }}
         >
-          <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.06)" />
-          <XAxis
-            dataKey="name"
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "#9c9286", fontSize: 12 }}
-          />
+          <CartesianGrid vertical={false} stroke="var(--border)" />
+          <XAxis dataKey="name" tickLine={false} axisLine={false} tick={tick} />
           <YAxis
             allowDecimals={false}
             tickLine={false}
             axisLine={false}
-            tick={{ fill: "#9c9286", fontSize: 12 }}
+            tick={tick}
           />
           <Tooltip
-            cursor={{ fill: "rgba(255,255,255,0.04)" }}
+            cursor={{ fill: "rgba(128,128,128,0.08)" }}
             contentStyle={{
-              background: "#25221e",
-              border: "1px solid rgba(255,160,0,0.2)",
+              background: "var(--popover)",
+              border: "1px solid var(--border)",
               borderRadius: 8,
+              color: "var(--popover-foreground)",
             }}
-            labelStyle={{ color: "#e6e1df" }}
-            itemStyle={{ color: "#e6e1df" }}
+            labelStyle={{ color: "var(--foreground)" }}
+            itemStyle={{ color: "var(--popover-foreground)" }}
           />
           <Bar dataKey="value" radius={[4, 4, 0, 0]}>
             {data.map((d) => (

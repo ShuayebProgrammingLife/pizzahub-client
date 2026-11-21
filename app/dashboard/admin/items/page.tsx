@@ -191,7 +191,7 @@ function ItemViewBody({
           <Button
             disabled={busy}
             onClick={() => onStatus(item, "approved")}
-            className="bg-basil font-bold text-[#08390a] hover:bg-basil/90"
+            className="bg-basil font-bold text-basil-foreground hover:bg-basil/90"
           >
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -437,7 +437,7 @@ export default function ManageItemsPage() {
                                 size="sm"
                                 disabled={busy}
                                 onClick={() => setItemStatus(item, "approved")}
-                                className="gap-1 bg-basil font-bold text-[#08390a] hover:bg-basil/90"
+                                className="gap-1 bg-basil font-bold text-basil-foreground hover:bg-basil/90"
                               >
                                 {busy ? (
                                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -494,7 +494,7 @@ export default function ManageItemsPage() {
                             variant="ghost"
                             onClick={() => setDeleting(item)}
                             aria-label="Delete item"
-                            className="text-secondary"
+                            className="text-danger"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>

@@ -119,8 +119,8 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-tomato-container/30 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-secondary">
-              <span className="h-2 w-2 rounded-full bg-secondary" /> Live Oven
+            <span className="inline-flex items-center gap-2 rounded-full bg-tomato-container/30 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-danger">
+              <span className="h-2 w-2 rounded-full bg-danger" /> Live Oven
               Network
             </span>
             <h1 className="text-4xl font-extrabold leading-[1.05] sm:text-5xl lg:text-6xl">

@@ -272,7 +272,7 @@ export default function MyItemsPage() {
                         variant="ghost"
                         onClick={() => setDeleting(item)}
                         aria-label="Delete item"
-                        className="text-secondary"
+                        className="text-danger"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

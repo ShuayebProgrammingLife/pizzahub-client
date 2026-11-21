@@ -85,7 +85,7 @@ export function OrderCard({
           <Button
             disabled={busy}
             onClick={() => onAct(order._id, "accepted")}
-            className="bg-basil font-bold text-[#08390a] hover:bg-basil/90"
+            className="bg-basil font-bold text-basil-foreground hover:bg-basil/90"
           >
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" />

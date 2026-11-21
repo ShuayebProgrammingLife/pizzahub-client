@@ -152,7 +152,7 @@ export function DashboardShell({
     if (session.user.isBlocked) {
       return (
         <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center">
-          <ShieldBan className="h-12 w-12 text-secondary" />
+          <ShieldBan className="h-12 w-12 text-danger" />
           <h1 className="text-3xl font-bold">Your account is blocked</h1>
           <p className="max-w-md text-on-surface-variant">
             An administrator has blocked this account, so you cannot use
@@ -246,7 +246,7 @@ export function DashboardShell({
         </div>
         <button
           onClick={logout}
-          className="flex w-full items-center justify-center gap-2 rounded-md bg-surface-high py-2 text-sm font-semibold text-secondary transition hover:bg-surface-highest"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-surface-high py-2 text-sm font-semibold text-danger transition hover:bg-surface-highest"
         >
           <LogOut className="h-4 w-4" /> Logout
         </button>

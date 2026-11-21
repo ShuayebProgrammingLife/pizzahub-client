@@ -29,7 +29,7 @@ export default function PaymentCancelPage() {
   return (
     <Container className="py-20">
       <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-lg border border-white/5 bg-card p-10 text-center">
-        <XCircle className="h-12 w-12 text-secondary" />
+        <XCircle className="h-12 w-12 text-danger" />
         <h1 className="text-3xl font-bold">Payment cancelled</h1>
         <p className="text-on-surface-variant">
           You were not charged, and your plan has not changed. You can upgrade

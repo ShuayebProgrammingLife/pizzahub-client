@@ -109,7 +109,7 @@ export default function SubscriptionPage() {
       />
 
       {error && (
-        <p className="rounded-lg border border-border bg-card p-4 text-sm text-secondary">
+        <p className="rounded-lg border border-border bg-card p-4 text-sm text-danger">
           {error}
         </p>
       )}
