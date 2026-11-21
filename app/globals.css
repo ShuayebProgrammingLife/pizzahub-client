@@ -47,46 +47,70 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  --color-surface: #141312;
-  --color-surface-lowest: #0f0e0d;
-  --color-surface-low: #1d1b1a;
-  --color-surface-container: #211f1e;
-  --color-surface-high: #2b2a28;
-  --color-surface-highest: #363433;
-  --color-on-surface-variant: #d9c3ad;
-  --color-outline: #a18d79;
-  --color-outline-variant: #544433;
-  --color-ember: #ffc788;
-  --color-tomato: #d32f2f;
-  --color-tomato-container: #a40213;
-  --color-basil: #aadf9e;
+  --color-surface: var(--surface);
+  --color-surface-lowest: var(--surface-lowest);
+  --color-surface-low: var(--surface-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-high: var(--surface-high);
+  --color-surface-highest: var(--surface-highest);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-ember: var(--ember);
+  --color-danger: var(--danger);
+  --color-tomato: var(--tomato);
+  --color-tomato-container: var(--tomato-container);
+  --color-basil: var(--basil);
+  --color-basil-foreground: var(--basil-foreground);
 }
 
 :root {
+  color-scheme: light;
   --background: #fffaf3;
-  /* cream */
   --foreground: #2b1d16;
-  /* dark brown */
   --card: #ffffff;
   --card-foreground: #2b1d16;
-  --primary: #d62828;
-  /* tomato red */
+  --popover: #ffffff;
+  --popover-foreground: #2b1d16;
+  --primary: #c62828;
   --primary-foreground: #ffffff;
-  --secondary: #fde8d0;
-  /* soft cream-orange */
+  --secondary: #f6e7d2;
   --secondary-foreground: #2b1d16;
-  --accent: #f77f00;
-  /* cheese orange */
-  --accent-foreground: #ffffff;
   --muted: #f6ede1;
-  --muted-foreground: #7a6558;
-  --border: #ecdcc8;
-  --input: #ecdcc8;
-  --ring: #d62828;
-  --radius: 0.75rem;
+  --muted-foreground: #6f5d50;
+  --accent: #fde8d0;
+  --accent-foreground: #7a2e0e;
+  --destructive: #b3261e;
+  --border: #ead8c2;
+  --input: #e2cdb3;
+  --ring: #c62828;
+  --radius: 0.5rem;
+  --chart-1: #c62828;
+  --chart-2: #e08a00;
+  --chart-3: #2e7d32;
+  --chart-4: #b45309;
+  --chart-5: #8a7566;
+
+  --surface: #fffaf3;
+  --surface-lowest: #f8ecdb;
+  --surface-low: #fdf3e6;
+  --surface-container: #ffffff;
+  --surface-high: #f5e8d6;
+  --surface-highest: #ead8c2;
+  --on-surface-variant: #6b5648;
+  --outline: #8a7566;
+  --outline-variant: #d9c3ad;
+  --ember: #b45309;
+  --danger: #b3261e;
+  --tomato: #c62828;
+  --tomato-container: #a40213;
+  --basil: #2e7d32;
+  --basil-foreground: #ffffff;
+  --glow: rgba(198, 40, 40, 0.25);
 }
 
 .dark {
+  color-scheme: dark;
   --background: #141312;
   --foreground: #e6e1df;
   --card: #1b1917;
@@ -111,6 +135,23 @@
   --chart-3: #aadf9e;
   --chart-4: #ffc788;
   --chart-5: #a18d79;
+
+  --surface: #141312;
+  --surface-lowest: #0f0e0d;
+  --surface-low: #1d1b1a;
+  --surface-container: #211f1e;
+  --surface-high: #2b2a28;
+  --surface-highest: #363433;
+  --on-surface-variant: #d9c3ad;
+  --outline: #a18d79;
+  --outline-variant: #544433;
+  --ember: #ffc788;
+  --danger: #ffb4ab;
+  --tomato: #d32f2f;
+  --tomato-container: #a40213;
+  --basil: #aadf9e;
+  --basil-foreground: #08390a;
+  --glow: rgba(255, 160, 0, 0.35);
 }
 
 @layer base {
@@ -139,11 +180,28 @@
 }
 
 @layer utilities {
-  .glow-amber {
-    box-shadow: 0 0 24px rgba(255, 160, 0, 0.35);
-  }
+    .glow-amber {
+        box-shadow: 0 0 24px var(--glow);
+      }
 
   .tabular {
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* light mode: the dark design uses faint white lines, so swap them for faint brown */
+:root:not(.dark) .border-white\/5 {
+  border-color: rgba(43, 29, 22, 0.09);
+}
+
+:root:not(.dark) .border-white\/10 {
+  border-color: rgba(43, 29, 22, 0.15);
+}
+
+:root:not(.dark) .bg-white\/10 {
+  background-color: rgba(43, 29, 22, 0.12);
+}
+
+:root:not(.dark) .text-white\/5 {
+  color: rgba(43, 29, 22, 0.07);
 }
