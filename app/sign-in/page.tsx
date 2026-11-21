@@ -32,7 +32,13 @@ export default function SignInPage() {
       return;
     }
     toast.success("Welcome back!");
-    router.push("/dashboard"); // /dashboard sends each role to its own dashboard
+    const next = new URLSearchParams(window.location.search).get("next");
+    // only allow in-site paths (blocks open redirects like //evil.com)
+    router.push(
+      next && next.startsWith("/") && !next.startsWith("//")
+        ? next
+        : "/dashboard",
+    );
     router.refresh();
   }
 
