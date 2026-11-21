@@ -5,14 +5,20 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 
-export function GoogleButton() {
+export function GoogleButton({ role }: { role?: "customer" | "vendor" }) {
   const [loading, setLoading] = useState(false);
 
   async function handleClick() {
     setLoading(true);
+    // tells the server which role a brand-new Google account should get
+    document.cookie = role
+      ? `ph_role=${role}; path=/; max-age=600; SameSite=Lax`
+      : "ph_role=; path=/; max-age=0";
+
     const { error } = await authClient.signIn.social({
       provider: "google",
       callbackURL: "/dashboard",
+      errorCallbackURL: "/sign-in",
     });
     if (error) {
       toast.error(error.message || "Google sign-in is not available right now");

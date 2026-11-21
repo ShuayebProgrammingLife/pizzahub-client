@@ -27,6 +27,8 @@ import { authClient } from "@/lib/auth-client";
 import { clearApiToken } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
+import { ThemeToggle } from "@/components/site/theme-toggle";
+
 const ROLE_LABEL: Record<string, string> = {
   vendor: "Vendor Partner",
   customer: "Customer",
@@ -95,6 +97,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {isPending ? (
             <Skeleton className="hidden h-10 w-40 rounded-full md:block" />
           ) : user ? (

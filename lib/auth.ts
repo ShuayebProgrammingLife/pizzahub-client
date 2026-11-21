@@ -69,9 +69,12 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        before: async (user) => {
-          const role = (user as { role?: string }).role;
-          return { data: { ...user, role: role === "vendor" ? "vendor" : "customer" } };
+        before: async (user, context) => {
+          const direct = (user as { role?: string }).role;
+          // Google sign-up: the sign-up page leaves the chosen role in a short-lived cookie
+          const fromCookie = (context as { getCookie?: (k: string) => string | null } | null)?.getCookie?.("ph_role");
+          const wanted = direct ?? fromCookie;
+          return { data: { ...user, role: wanted === "vendor" ? "vendor" : "customer" } };
         },
       },
       update: {
@@ -98,7 +101,7 @@ export const auth = betterAuth({
       },
     },
 
-    
+
   },
 
   // Issues JWTs that the Express server will verify (Step 3)

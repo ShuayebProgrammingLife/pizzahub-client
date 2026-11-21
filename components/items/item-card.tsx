@@ -16,7 +16,7 @@ export function ItemCard({ item }: { item: MenuItem }) {
           loading="lazy"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-3 top-3 rounded bg-black/70 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-ember backdrop-blur">
+        <span className="absolute left-3 top-3 rounded bg-black/70 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#ffc788] backdrop-blur">
           {item.category}
         </span>
         {item.vendor.isPremium && (

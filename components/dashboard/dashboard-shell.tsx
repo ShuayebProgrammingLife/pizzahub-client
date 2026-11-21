@@ -29,6 +29,8 @@ import { authClient } from "@/lib/auth-client";
 import { clearApiToken } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
+import { ThemeToggle } from "@/components/site/theme-toggle";
+
 type NavItem = {
   href: string;
   label: string;
@@ -244,6 +246,9 @@ export function DashboardShell({
             </p>
           </div>
         </div>
+
+        <ThemeToggle showLabel className="mb-2 w-full bg-surface-high" />
+        
         <button
           onClick={logout}
           className="flex w-full items-center justify-center gap-2 rounded-md bg-surface-high py-2 text-sm font-semibold text-danger transition hover:bg-surface-highest"
@@ -272,7 +277,7 @@ export function DashboardShell({
           <Link href="/" className="font-heading text-lg font-bold text-ember">
             PizzaHub
           </Link>
-          <span className="w-9" />
+          <ThemeToggle />
         </header>
         <main className="flex-1 space-y-8 p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
