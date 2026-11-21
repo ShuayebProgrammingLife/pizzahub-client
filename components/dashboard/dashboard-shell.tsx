@@ -13,11 +13,16 @@ import {
   LogOut,
   Menu,
   PlusCircle,
+  Receipt,
   Settings,
+  ShieldBan,
   ShoppingBag,
+  Users,
   UtensilsCrossed,
   type LucideIcon,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { authClient } from "@/lib/auth-client";
@@ -30,7 +35,7 @@ type NavItem = {
   icon: LucideIcon;
   exact?: boolean;
 };
-type Role = "vendor" | "customer"; // "admin" is added in its own step
+type Role = "vendor" | "customer" | "admin";
 
 const NAV: Record<Role, NavItem[]> = {
   vendor: [
@@ -80,6 +85,30 @@ const NAV: Record<Role, NavItem[]> = {
       icon: Settings,
     },
   ],
+  admin: [
+    {
+      href: "/dashboard/admin",
+      label: "Overview",
+      icon: LayoutDashboard,
+      exact: true,
+    },
+    { href: "/dashboard/admin/users", label: "Manage Users", icon: Users },
+    {
+      href: "/dashboard/admin/items",
+      label: "Manage Menu Items",
+      icon: UtensilsCrossed,
+    },
+    {
+      href: "/dashboard/admin/transactions",
+      label: "Transactions",
+      icon: Receipt,
+    },
+    {
+      href: "/dashboard/admin/profile",
+      label: "Profile Settings",
+      icon: Settings,
+    },
+  ],
 };
 
 const ROLE_LABEL: Record<string, string> = {
@@ -120,6 +149,29 @@ export function DashboardShell({
     );
   }
 
+    if (session.user.isBlocked) {
+      return (
+        <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center">
+          <ShieldBan className="h-12 w-12 text-secondary" />
+          <h1 className="text-3xl font-bold">Your account is blocked</h1>
+          <p className="max-w-md text-on-surface-variant">
+            An administrator has blocked this account, so you cannot use
+            dashboard features or place orders.
+          </p>
+          <Button
+            onClick={async () => {
+              clearApiToken();
+              await authClient.signOut();
+              router.push("/");
+              router.refresh();
+            }}
+          >
+            Log out
+          </Button>
+        </div>
+      );
+    }
+    
   const user = session.user;
   const initials = user.name
     .split(" ")
