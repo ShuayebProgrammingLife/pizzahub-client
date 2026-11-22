@@ -15,8 +15,21 @@ const googleEnabled = !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIE
 
 const PUBLIC_ROLES = ["vendor", "customer"];
 
-const rawBaseURL = process.env.BETTER_AUTH_URL || "";
-const baseURL = rawBaseURL.replace(/\/+$/, "");
+const getBaseURL = () => {
+  const envUrl = process.env.BETTER_AUTH_URL?.replace(/\/+$/, "");
+  if (envUrl && !envUrl.includes("localhost")) {
+    return envUrl;
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return envUrl || "http://localhost:3000";
+};
+
+const baseURL = getBaseURL();
 
 export const auth = betterAuth({
   database: mongodbAdapter(db, { client }),
