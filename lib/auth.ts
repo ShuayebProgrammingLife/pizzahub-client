@@ -15,12 +15,19 @@ const googleEnabled = !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIE
 
 const PUBLIC_ROLES = ["vendor", "customer"];
 
+const rawBaseURL = process.env.BETTER_AUTH_URL || "";
+const baseURL = rawBaseURL.replace(/\/+$/, "");
+
 export const auth = betterAuth({
-  
   database: mongodbAdapter(db, { client }),
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: baseURL || undefined,
   secret: process.env.BETTER_AUTH_SECRET,
-  trustedOrigins: [process.env.BETTER_AUTH_URL!],
+  trustedOrigins: [
+    baseURL,
+    "http://localhost:3000",
+    "http://localhost:3002",
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+  ].filter(Boolean),
 
   emailAndPassword: {
     enabled: true,
