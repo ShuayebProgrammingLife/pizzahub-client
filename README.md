@@ -64,7 +64,7 @@ Create a `.env.local` file in the `pizzahub-client` root directory:
 
 ```env
 # URL of your Express API Server
-NEXT_PUBLIC_API_URL=http://localhost:5000
+NEXT_PUBLIC_API_URL=http://localhost:3002
 
 # Better Auth Configuration
 BETTER_AUTH_SECRET=your_better_auth_secret_minimum_32_characters

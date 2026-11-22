@@ -26,6 +26,7 @@ export const auth = betterAuth({
     baseURL,
     "http://localhost:3000",
     "http://localhost:3002",
+    "*.vercel.app",
     ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
   ].filter(Boolean),
 
