@@ -6,7 +6,7 @@ PizzaHub is a high-performance, role-based artisan pizza ordering and kitchen de
 
 ## Live Links & Repositories
 
-* **Live Client Application**: `https://pizzahub-client.vercel.app` *(Replace with your live deployment URL)*
+* **Live Client Application**: `https://pizzahub-client-phi.vercel.app`
 * **Client GitHub Repository**: `https://github.com/ShuayebProgrammingLife/pizzahub-client`
 * **Server GitHub Repository**: `https://github.com/ShuayebProgrammingLife/PizzaHub-Pizza-Ordering-Delivery-Platform`
 
@@ -84,6 +84,32 @@ NEXT_PUBLIC_IMGBB_KEY=your_imgbb_api_key
 
 > **Security Note**: Never commit `.env` or `.env.local` to GitHub. The `.gitignore` file is configured to exclude all environment files.
 
+### Vercel and production API configuration
+
+For the Vercel client deployment, configure these variables in the Vercel project's
+Environment Variables settings, then redeploy. `NEXT_PUBLIC_*` values are included
+in the client bundle at build time.
+
+```env
+NEXT_PUBLIC_API_URL=https://pizzahub-server-n1u2.onrender.com
+NEXT_PUBLIC_IMGBB_KEY=<your-imgbb-api-key>
+BETTER_AUTH_URL=https://<your-vercel-domain>
+BETTER_AUTH_SECRET=<your-production-auth-secret>
+MONGODB_URI=<your-production-mongodb-uri>
+DB_NAME=pizzahub
+```
+
+Set `NEXT_PUBLIC_API_URL` to the backend origin (for example,
+`https://pizzahub-server-n1u2.onrender.com`), not to the Vercel frontend and not to a
+URL ending in `/api`. Set these variables for every Vercel environment you use
+(Production, Preview, and Development).
+
+On the backend host, set `CLIENT_URL` and `AUTH_URL` to the same deployed
+frontend origin used for `BETTER_AUTH_URL`, and configure its production
+`MONGODB_URI` and `DB_NAME`. Also configure the Stripe variables there if
+subscriptions are enabled. After changing either deployment's environment
+variables, redeploy that project.
+
 ---
 
 ## Local Installation & Setup
@@ -139,5 +165,5 @@ NEXT_PUBLIC_IMGBB_KEY=your_imgbb_api_key
 ## Submission Details
 
 * **Admin Email**: `admin@pizzahub.com`
-* **Admin Password**: `Admin1234!` *(Created securely via server seed)*
+* **Admin Password**: `Admin1234` *(Created securely via server seed)*
 * **Test Stripe Card**: `4242 4242 4242 4242` (Any future expiration date, CVC `123`, ZIP `10001`)

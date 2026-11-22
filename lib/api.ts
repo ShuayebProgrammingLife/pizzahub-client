@@ -3,6 +3,15 @@ import { authClient } from "./auth-client";
 const API = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
 let cached: { token: string; exp: number } | null = null;
 
+function getApiUrl(path: string) {
+  if (!API) {
+    throw new Error(
+      "NEXT_PUBLIC_API_URL is not configured. Set it to your API server URL and redeploy.",
+    );
+  }
+  return `${API}${path}`;
+}
+
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -24,8 +33,9 @@ async function getToken() {
 }
 
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const url = getApiUrl(path);
   const token = await getToken();
-  const res = await fetch(`${API}${path}`, {
+  const res = await fetch(url, {
     ...init,
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +53,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
 
 // For public endpoints: no token needed
 export async function publicFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${API}${path}`, init);
+  const res = await fetch(getApiUrl(path), init);
   const body = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(res.status, body?.message || "Request failed");
   return body as T;
